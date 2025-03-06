@@ -1,18 +1,12 @@
-# Use a specific Node.js version (v16)
-FROM node:16
+FROM node:18
 
-# Set the working directory
+# Set the NODE_OPTIONS environment variable to use the legacy OpenSSL provider
+ENV NODE_OPTIONS="--openssl-legacy-provider"
+
+# Set up the app
 WORKDIR /app
-
-# Copy the package.json and install dependencies
-COPY package*.json ./
+COPY . .
 RUN npm install
 
-# Copy the rest of your application
-COPY . .
-
-# Expose the port Vercel uses
-EXPOSE 3000
-
-# Command to run your application
+# Run the app
 CMD ["npm", "start"]
